@@ -11,7 +11,8 @@ func _physics_process(delta: float) -> void:
 	for i in range(get_slide_collision_count()):
 		var collision = get_slide_collision(i)
 		var tilemap = collision.get_collider() as TileMapLayer
-		var tile_position = tilemap.local_to_map(tilemap.to_local(collision.get_position()))
+		var hit_position = collision.get_position() - collision.get_normal() * 2.0
+		var tile_position = tilemap.local_to_map(tilemap.to_local(hit_position))
 		
 		var tile_data = tilemap.get_cell_tile_data(tile_position)
 
