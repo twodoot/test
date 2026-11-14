@@ -1,0 +1,68 @@
+[gd_scene format=4 uid="uid://dstqc5agwgox3"]
+
+[ext_resource type="Script" uid="uid://ct3370r55isra" path="res://character_body_2d.gd" id="1_112p8"]
+[ext_resource type="Texture2D" uid="uid://ddxmxgyyfy8mn" path="res://icon.svg" id="2_e2u21"]
+[ext_resource type="Texture2D" uid="uid://dfpx1ir4scul2" path="res://Sprite-0001.png" id="3_112p8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(61, 54)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e2u21"]
+texture = ExtResource("3_112p8")
+texture_region_size = Vector2i(10, 10)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -5, -5, 5, 5, 5, 5, -5)
+0:1/0/custom_data_0 = true
+
+[sub_resource type="TileSet" id="TileSet_yf5fn"]
+tile_size = Vector2i(10, 10)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "death"
+custom_data_layer_0/type = 1
+sources/0 = SubResource("TileSetAtlasSource_e2u21")
+
+[node name="Node" type="Node" unique_id=1166650027]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1646379525]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_112p8")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1386221911]
+position = Vector2(241.50002, 225.75002)
+scale = Vector2(0.52343774, 0.46484357)
+texture = ExtResource("2_e2u21")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=2014382955]
+position = Vector2(241.5, 226)
+shape = SubResource("RectangleShape2D_g4v7s")
+
+[node name="RightWallRay1" type="RayCast2D" parent="CharacterBody2D" unique_id=561528209]
+position = Vector2(241, 226)
+target_position = Vector2(33, 0)
+
+[node name="LeftWallRay1" type="RayCast2D" parent="CharacterBody2D" unique_id=1072699416]
+position = Vector2(241, 226)
+target_position = Vector2(-32, 0)
+
+[node name="LeftWallRay2" type="RayCast2D" parent="CharacterBody2D" unique_id=1718805609]
+position = Vector2(241, 252)
+target_position = Vector2(-32, 0)
+
+[node name="LeftWallRay3" type="RayCast2D" parent="CharacterBody2D" unique_id=1095409452]
+position = Vector2(241, 200)
+target_position = Vector2(-32, 0)
+
+[node name="RightWallRay2" type="RayCast2D" parent="CharacterBody2D" unique_id=1016597346]
+position = Vector2(241, 252)
+target_position = Vector2(32, 0)
+
+[node name="RightWallRay3" type="RayCast2D" parent="CharacterBody2D" unique_id=712359829]
+position = Vector2(241, 200)
+target_position = Vector2(32, 0)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1253287812]
+tile_map_data = PackedByteArray("AAD//x0AAAAAAAAAAAAAAB0AAAAAAAAAAAABAB0AAAAAAAAAAAACAB0AAAAAAAAAAAADAB0AAAAAAAAAAAAEAB0AAAAAAAAAAAAFAB0AAAAAAAAAAAAGAB0AAAAAAAAAAAAHAB0AAAAAAAAAAAAIAB0AAAAAAAAAAAAJAB0AAAAAAAAAAAAKAB0AAAAAAAAAAAALAB0AAAAAAAAAAAAMAB0AAAAAAAAAAAANAB0AAAAAAAAAAAAOAB0AAAAAAAAAAAAPAB0AAAAAAAAAAAAQAB0AAAAAAAAAAAARAB0AAAAAAAAAAAASAB0AAAAAAAAAAAATAB0AAAAAAAAAAAAUAB0AAAAAAAAAAAAVAB0AAAAAAAAAAAAWAB0AAAAAAAAAAAAXAB0AAAAAAAAAAAAYAB0AAAAAAAAAAAAZAB0AAAAAAAAAAAAaAB0AAAAAAAAAAAAbAB0AAAAAAAAAAAAcAB0AAAAAAAAAAAAdAB0AAAAAAAAAAAAeAB0AAAAAAAAAAAAfAB0AAAAAAAAAAAAgAB0AAAAAAAAAAAAhAB0AAAAAAAAAAAAiAB0AAAAAAAAAAAAjAB0AAAAAAAAAAAAkAB0AAAAAAAAAAAAlAB0AAAAAAAAAAAAmAB0AAAAAAAAAAAAnAB0AAAAAAAAAAAAoAB0AAAAAAAAAAAApAB0AAAAAAAAAAAAqAB0AAAAAAAAAAAAqAB4AAAAAAAAAAAArAB4AAAAAAAAAAAAsAB4AAAAAAAAAAAAtAB4AAAAAAAAAAAAuAB0AAAAAAAAAAAAvAB0AAAAAAAAAAAAwAB0AAAAAAAAAAAAxAB0AAAAAAAAAAAAyAB0AAAAAAAAAAAArAB0AAAAAAAAAAAAsAB0AAAAAAAAAAAAtAB0AAAAAAAAAAAD+/x0AAAAAAAAAAAD+/xwAAAAAAAEAAAD+/xsAAAAAAAEAAAD+/xoAAAAAAAAAAAD+/xkAAAAAAAAAAAD//xgAAAAAAAAAAAD//xcAAAAAAAAAAAD//xYAAAAAAAAAAAD//xUAAAAAAAAAAAD//xQAAAAAAAAAAAD//xMAAAAAAAAAAAD//xIAAAAAAAAAAAD//xEAAAAAAAAAAAD+/xEAAAAAAAAAAAD+/xAAAAAAAAAAAAD+/w8AAAAAAAAAAAD+/w4AAAAAAAAAAAD+/w0AAAAAAAAAAAD+/wwAAAAAAAAAAAD+/wsAAAAAAAAAAAAmABwAAAAAAAEAAAAnABwAAAAAAAEAAAAoABwAAAAAAAEAAAApABwAAAAAAAEAAAAqABwAAAAAAAEAAAArABwAAAAAAAEAAAAsABwAAAAAAAEAAAAtABwAAAAAAAEAAAAoABsAAAAAAAEAAAApABsAAAAAAAEAAAApABoAAAAAAAEAAAAqABsAAAAAAAEAAAArABsAAAAAAAEAAAArABoAAAAAAAEAAAAqABoAAAAAAAEAAAD//xkAAAAAAAEAAAAAABkAAAAAAAEAAAABABkAAAAAAAEAAAABABoAAAAAAAEAAAACABoAAAAAAAEAAAACABsAAAAAAAEAAAACABwAAAAAAAEAAAABABwAAAAAAAEAAAAAABwAAAAAAAEAAAAAABsAAAAAAAEAAAD//xoAAAAAAAEAAAAAABoAAAAAAAEAAAABABsAAAAAAAEAAAD//xsAAAAAAAEAAAD//xwAAAAAAAEAAAA=")
+tile_set = SubResource("TileSet_yf5fn")
