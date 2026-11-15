@@ -1,15 +1,21 @@
 extends CharacterBody2D
 
-
 const SPEED = 1000
 const JUMP_VELOCITY = 400.0
+const BOUNCE_VELOCITY = 500
 const speed_jump_multiplier_y = -0.0005
 const speed_jump_multiplier_x = -0.0005
 
 
 func _physics_process(delta: float) -> void:
 	
-	#death
+	
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	
+	
+	#special attributes
 	
 	for i in range(get_slide_collision_count()):
 		var collision = get_slide_collision(i)
@@ -22,21 +28,59 @@ func _physics_process(delta: float) -> void:
 		if tile_data != null:
 			if tile_data.get_custom_data("death"):
 				get_tree().call_deferred("reload_current_scene")
+			if tile_data.get_custom_data("bounce"):
+				var normal : Vector2 = Vector2(0,0)
+		
+				if is_on_floor():
+					normal += get_floor_normal()
+					
+				if $RoofRay1.is_colliding():
+					normal += $RoofRay1.get_collision_normal()
+				elif $RoofRay2.is_colliding():
+					normal += $RoofRay2.get_collision_normal()
+				elif $RoofRay3.is_colliding():
+					normal += $RoofRay3.get_collision_normal()
+			
+				if $RightWallRay1.is_colliding():
+					normal += ($RightWallRay1.get_collision_normal())
+				elif $RightWallRay2.is_colliding():
+					normal += ($RightWallRay2.get_collision_normal())
+				elif $RightWallRay3.is_colliding():
+					normal += ($RightWallRay3.get_collision_normal())
+			
+				if $LeftWallRay1.is_colliding():
+					normal += ($LeftWallRay1.get_collision_normal())
+				elif $LeftWallRay2.is_colliding():
+					normal += ($LeftWallRay2.get_collision_normal())
+				elif $LeftWallRay3.is_colliding():
+					normal += ($LeftWallRay3.get_collision_normal())
+			
+				normal = normal.normalized()
+		
+				normal.y += velocity.length()*speed_jump_multiplier_y
+				normal.x += velocity.length()*speed_jump_multiplier_x
+		
+				velocity += normal *BOUNCE_VELOCITY
+				
 
 	
-	
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	
+
+
 	
 	# Handle jump.
-	if Input.is_action_pressed("ui_accept") and (is_on_floor() or $RightWallRay1.is_colliding() or $RightWallRay2.is_colliding() or $RightWallRay3.is_colliding() or $LeftWallRay1.is_colliding() or $LeftWallRay2.is_colliding() or $LeftWallRay3.is_colliding()):
+	if Input.is_action_pressed("ui_accept") and (is_on_floor() or $RightWallRay1.is_colliding() or $RightWallRay2.is_colliding() or $RightWallRay3.is_colliding() or $LeftWallRay1.is_colliding() or $LeftWallRay2.is_colliding() or $LeftWallRay3.is_colliding() or $RoofRay1.is_colliding() or $RoofRay2.is_colliding() or $RoofRay3.is_colliding()):
 		
 		var normal : Vector2 = Vector2(0,0)
 		
 		if is_on_floor():
 			normal += get_floor_normal()
+			
+		if $RoofRay1.is_colliding():
+			normal += $RoofRay1.get_collision_normal()
+		elif $RoofRay2.is_colliding():
+			normal += $RoofRay2.get_collision_normal()
+		elif $RoofRay3.is_colliding():
+			normal += $RoofRay3.get_collision_normal()
 			
 		if $RightWallRay1.is_colliding():
 			normal += ($RightWallRay1.get_collision_normal())
@@ -75,6 +119,4 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	
-	
-
 	
