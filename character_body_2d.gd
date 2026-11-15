@@ -1,7 +1,10 @@
 extends CharacterBody2D
 
+
 const SPEED = 1000
 const JUMP_VELOCITY = 400.0
+const speed_jump_multiplier_y = -0.0005
+const speed_jump_multiplier_x = -0.0005
 
 
 func _physics_process(delta: float) -> void:
@@ -49,10 +52,16 @@ func _physics_process(delta: float) -> void:
 		elif $LeftWallRay3.is_colliding():
 			normal += ($LeftWallRay3.get_collision_normal())
 			
+			
+		
 		if Input.is_action_pressed("ui_up"):
 			velocity.y=0
 			normal.y += -1.5
 		normal = normal.normalized()
+		
+		normal.y += velocity.length()*speed_jump_multiplier_y
+		normal.x += velocity.length()*speed_jump_multiplier_x
+		
 		velocity += normal *JUMP_VELOCITY
 		
 	# Get the input direction and handle the movement/deceleration.
